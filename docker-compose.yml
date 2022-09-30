@@ -1,0 +1,15 @@
+version: "3.5"
+services:
+  enrollments-db:
+    platform: linux/amd64
+    container_name: g_wc_ex_borrar
+    build:
+      context: ./.dockers/mysql
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: g_ms_courses_borrar
+    ports:
+      - "3322:3306"
+    volumes:
+      - ./.dockers/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
