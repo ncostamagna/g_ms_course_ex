@@ -26,7 +26,7 @@ func main() {
 	ctx := context.Background()
 	courseRepo := course.NewRepo(db, l)
 	courseSrv := course.NewService(l, courseRepo)
-	h := handler.NewCourseHTTPServer(ctx, user.MakeEndpoints(courseSrv))
+	h := handler.NewCourseHTTPServer(ctx, course.MakeEndpoints(courseSrv))
 	port := os.Getenv("PORT")
 
 	srv := &http.Server{

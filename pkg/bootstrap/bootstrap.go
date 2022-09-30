@@ -30,7 +30,7 @@ func DBConnection() (*gorm.DB, error) {
 	}
 
 	if os.Getenv("DATABASE_MIGRATE") == "true" {
-		if err := db.AutoMigrate(&domain.User{}); err != nil {
+		if err := db.AutoMigrate(&domain.Course{}); err != nil {
 			return nil, err
 		}
 	}
