@@ -28,10 +28,10 @@ func main() {
 	courseSrv := course.NewService(l, courseRepo)
 	h := handler.NewCourseHTTPServer(ctx, course.MakeEndpoints(courseSrv))
 	port := os.Getenv("PORT")
-
+	address := fmt.Sprintf("127.0.0.1:%s", port)
 	srv := &http.Server{
 		Handler:      accessControl(h),
-		Addr:         fmt.Sprintf("127.0.0.1:%s", port),
+		Addr:         address,
 		WriteTimeout: 10 * time.Second,
 		ReadTimeout:  4 * time.Second,
 	}
@@ -39,6 +39,7 @@ func main() {
 	errCh := make(chan error)
 
 	go func() {
+		l.Println("listen in ", address)
 		errCh <- srv.ListenAndServe()
 	}()
 

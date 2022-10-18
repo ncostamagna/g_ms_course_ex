@@ -5,11 +5,12 @@ import (
 	"fmt"
 )
 
-var ErrInvalidStartDate = errors.New("invalida start date")
-var ErrInvalidEndDate = errors.New("invalida end date")
+var ErrInvalidStartDate = errors.New("invalid start date")
+var ErrInvalidEndDate = errors.New("invalid end date")
 var ErrNameRequired = errors.New("name is required")
 var ErrStartRequired = errors.New("start date is required")
 var ErrEndRequired = errors.New("end date is required")
+var ErrEndLesserStart = errors.New("end date mustn't be lesser than start date")
 
 // vamos a ir y ver el objeto error de nuevo
 type ErrNotFound struct {
