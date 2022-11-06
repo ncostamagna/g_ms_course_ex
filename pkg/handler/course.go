@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -63,7 +64,7 @@ func NewCourseHTTPServer(ctx context.Context, endpoints course.Endpoints) http.H
 func decodeStoreCourse(_ context.Context, r *http.Request) (interface{}, error) {
 	var req course.CreateReq
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		return nil, err
+		return nil, response.BadRequest(fmt.Sprintf("invalid request format: '%v'", err.Error()))
 	}
 
 	return req, nil
@@ -99,7 +100,7 @@ func decodeUpdateCourse(_ context.Context, r *http.Request) (interface{}, error)
 	var req course.UpdateReq
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		return nil, err
+		return nil, response.BadRequest(fmt.Sprintf("invalid request format: '%v'", err.Error()))
 	}
 
 	path := mux.Vars(r)
@@ -120,7 +121,7 @@ func decodeDeleteCourse(_ context.Context, r *http.Request) (interface{}, error)
 
 func encodeResponse(ctx context.Context, w http.ResponseWriter, resp interface{}) error {
 	r := resp.(response.Response)
-
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(r.StatusCode())
 	return json.NewEncoder(w).Encode(resp)
 }
